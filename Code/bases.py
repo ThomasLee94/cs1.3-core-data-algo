@@ -17,13 +17,13 @@ def decode(digits, base):
     return: int -- integer representation of number (in base 10)"""
     # Handle up to base 36 [0-9a-z]
     assert 2 <= base <= 36, 'base is out of range: {}'.format(base)
-    # TODO: Decode digits from binary (base 2)
-    # ...
-    # TODO: Decode digits from hexadecimal (base 16)
-    # ...
-    # TODO: Decode digits from any base (2 up to 36)
-    # ...
-
+    power = len(digits)
+    output = 0
+    for letter in digits:
+        power = len(digits)
+        # string.printable.index returns the value as index
+        output += (base ** power) * string.printable.index(letter)
+    return output
 
 def encode(number, base):
     """Encode given number in base 10 to digits in given base.
@@ -35,7 +35,7 @@ def encode(number, base):
     # Handle unsigned numbers only for now
     assert number >= 0, 'number is negative: {}'.format(number)
     # TODO: Encode number in binary (base 2)
-    # ...
+    
     # TODO: Encode number in hexadecimal (base 16)
     # ...
     # TODO: Encode number in any base (2 up to 36)
