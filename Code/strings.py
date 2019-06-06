@@ -1,10 +1,21 @@
 #!python
 
-def contains(text, pattern):
+def contains(text: str, pattern: str) -> bool:
     """Return a boolean indicating whether pattern occurs in text."""
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
-    # TODO: Implement contains here (iteratively and/or recursively)
+    # TODO: Implement contains here (iteratively and/or recursively
+
+    # We do not need to check the rest of text if pattern length exceeds remainder
+    for i in range(len(text) - len(pattern)):
+        # case: check if first letter of pattern exists in text
+        if text[i] == pattern[0]:
+            # A slice of text that is the length of pattern starting from text[i] to check if the remaining pattern follows after text[i]
+            rest = text[i:i+len(pattern)]
+            if pattern == rest:
+                return True
+    return False
+
 
 
 def find_index(text, pattern):
