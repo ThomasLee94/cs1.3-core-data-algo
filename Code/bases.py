@@ -36,12 +36,17 @@ def encode(number, base):
     assert 2 <= base <= 36, 'base is out of range: {}'.format(base)
     # Handle unsigned numbers only for now
     assert number >= 0, 'number is negative: {}'.format(number)
-    # TODO: Encode number in binary (base 2)
     
-    # TODO: Encode number in hexadecimal (base 16)
-    # ...
-    # TODO: Encode number in any base (2 up to 36)
-    # ...
+    output = ""
+    while number > 0:
+        remainder = number % base
+        # VALUE BY INDEX: 0 => '0', 1 => '1', 13 => 'd'
+        digit_for_value = string.printable[remainder]
+        # output = output + digit_for_value  # append new digit to right side of output string
+        output = digit_for_value + output  # prepend new digit to left side of output string
+        # ROUNDED DIVISION
+        number = number // base
+    return output
 
 
 def convert(digits, base1, base2):
