@@ -17,12 +17,14 @@ def decode(digits, base):
     return: int -- integer representation of number (in base 10)"""
     # Handle up to base 36 [0-9a-z]
     assert 2 <= base <= 36, 'base is out of range: {}'.format(base)
+    
     power = len(digits)
     output = 0
-    for letter in digits:
-        power = len(digits)
-        # string.printable.index returns the value as index
-        output += (base ** power) * string.printable.index(letter)
+    for digit in digits:
+        # INDEX() GIVES BACK INDEX OF THE DIGIT ACCORDING TO STRING.PRINTABLE
+        power -= 1
+        value_of_digit = string.printable.index(digit)
+        output += (base ** power) * value_of_digit
     return output
 
 def encode(number, base):
