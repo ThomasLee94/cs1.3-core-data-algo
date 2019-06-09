@@ -17,16 +17,58 @@ def is_palindrome(text):
     # return is_palindrome_recursive(text)
 
 
-def is_palindrome_iterative(text):
-    # TODO: implement the is_palindrome function iteratively here
-    pass
+def is_palindrome_iterative(text: str) -> bool:
+   
+    forward = 0
+    backward = len(text) - 1
+    print(backward)
+
+    while forward < backward:
+        # case: char not a letter
+        if text[forward] not in string.ascii_letters:
+            print(f'{text[forward]}: TEXT FORWARD - ASCII CHECK')
+            forward += 1
+        # case: char not a letter
+        if text[backward] not in string.ascii_letters:
+            print(f'{text[backward]}: TEXT BACKWARD - ASCII CHECK')
+            backward -= 1
+        else:
+            if text[forward].lower() != text[backward].lower():
+                return False
+            else:
+                # continue loop
+                print(f'{text[backward].lower()}: TEXT BACKWARD - CHAR')
+                print(f'{text[forward].lower()}: TEXT FORWARD - CHAR')
+                forward += 1
+                backward -= 1
+
+    # case: loop completed without text[forward].lower() != text[backward].lower()
+    return True
+
     # once implemented, change is_palindrome to call is_palindrome_iterative
     # to verify that your iterative implementation passes all tests
 
 
-def is_palindrome_recursive(text, left=None, right=None):
-    # TODO: implement the is_palindrome function recursively here
-    pass
+def is_palindrome_recursive(text: str, forward=None, backward=None) -> bool:
+    if forward or backward == None:
+        forward = 0
+        backward = len(text) - 1
+
+    # case: recursion updates forward past backward
+    if forward >= backward:
+        return True
+
+    # case: char not a letter
+    if text[forward] not in string.ascii_letters:
+        return is_palindrome_recursive(text,forward + 1, backward)
+    if text[backward] not in string.ascii_letters:
+        return is_palindrome_recursive(text, forward, backward - 1)
+
+    if text[forward].lower() != text[backward].lower(): 
+        return False
+    else:
+        return is_palindrome_recursive(text, forward + 1, backward - 1)
+
     # once implemented, change is_palindrome to call is_palindrome_recursive
     # to verify that your iterative implementation passes all tests
 
