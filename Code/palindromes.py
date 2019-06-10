@@ -21,24 +21,19 @@ def is_palindrome_iterative(text: str) -> bool:
    
     forward = 0
     backward = len(text) - 1
-    print(backward)
 
-    while forward < backward:
+    while forward <= backward:
         # case: char not a letter
-        if text[forward] not in string.ascii_letters:
-            print(f'{text[forward]}: TEXT FORWARD - ASCII CHECK')
+        while text[forward] not in string.ascii_letters:
             forward += 1
         # case: char not a letter
-        if text[backward] not in string.ascii_letters:
-            print(f'{text[backward]}: TEXT BACKWARD - ASCII CHECK')
+        while text[backward] not in string.ascii_letters:
             backward -= 1
         else:
             if text[forward].lower() != text[backward].lower():
                 return False
             else:
                 # continue loop
-                print(f'{text[backward].lower()}: TEXT BACKWARD - CHAR')
-                print(f'{text[forward].lower()}: TEXT FORWARD - CHAR')
                 forward += 1
                 backward -= 1
 
