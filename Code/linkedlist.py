@@ -217,13 +217,15 @@ class LinkedList(object):
         # ! Runtime best 
         # ! Runtime worse
 
-        try:
-            old_item_node = self.node_by_item(old_item)
-            old_item_node.data = new_item
         
+        node = self.head
+        for _ in range(self.size):
+            if node.data == old_item:
+                node.data = new_item
+                return 
+            node = node.next
         # node not found
-        except old_item_node as error:
-            raise error
+        raise ValueError
 
     def delete(self, item):
         """
