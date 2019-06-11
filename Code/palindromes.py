@@ -18,7 +18,8 @@ def is_palindrome(text):
 
 
 def is_palindrome_iterative(text: str) -> bool:
-   
+   # ! Runtime = O(n/2 + 2m)
+
     forward = 0
     backward = len(text) - 1
 
@@ -47,8 +48,7 @@ def is_palindrome_iterative(text: str) -> bool:
 def is_palindrome_recursive(text: str, forward=None, backward=None) -> bool:
     # init forward and backward
     if forward == None and backward == None:
-        forward = 0
-        backward = len(text) - 1
+        forward, backward = 0, len(text) - 1
 
     # case: recursion updates forward past backward
     if forward >= backward:
@@ -62,9 +62,9 @@ def is_palindrome_recursive(text: str, forward=None, backward=None) -> bool:
 
     if text[forward].lower() != text[backward].lower(): 
         return False
-    else:
-        # continue recursion 
-        return is_palindrome_recursive(text, forward + 1, backward - 1)
+    
+    # continue recursion 
+    return is_palindrome_recursive(text, forward + 1, backward - 1)
 
     # once implemented, change is_palindrome to call is_palindrome_recursive
     # to verify that your iterative implementation passes all tests
