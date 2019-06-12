@@ -53,6 +53,8 @@ def find_index(text: str, pattern: str, start=0) -> (int, None):
             rest = text[index: index + len(pattern)]
             if rest == pattern:
                 return index
+    
+    # window_loop(start, stop)
                     
     # case: pattern not in text
     return None
