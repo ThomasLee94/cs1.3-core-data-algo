@@ -89,7 +89,7 @@ class LinkedList(object):
         ValueError if the given index is out of range of the list size.
         """ 
 
-        # ! Runtime best and worst = 
+        # ! Runtime best and worst = O(n), n being index.
 
         # Check if the given index is out of range and if so raise an error
         if not (0 <= index < self.size):
@@ -109,7 +109,7 @@ class LinkedList(object):
         Returns node that contains item
         """ 
 
-        # ! Runtime best and worst = 
+        # ! Runtime best and worst = O(n), n being the length/size of ll. 
 
         try:
             node = self.head
@@ -130,8 +130,8 @@ class LinkedList(object):
         raise ValueError if the given index is out of range of the list size.
         """
 
-        # ! Runtime best
-        # ! Runtime worse 
+        # ! Runtime best = O(1)
+        # ! Runtime worst = O(2n), node_at_index() called. Tends to O(n) -> scales linearly.   
 
         # Check if the given index is out of range and if so raise an error
         if not (0 <= index <= self.size):
@@ -151,14 +151,17 @@ class LinkedList(object):
             new_node = Node(item)
             # insert new node to point at node_at_index
             new_node.next = index_node
-            # update pointer
+            # update pointer of previous_node
             previous_node.next = new_node
             # update size
             self.size += 1
 
     def append(self, item):
-        """Insert the given item at the tail of this linked list.
-        Best and worst case running time: ??? under what conditions? [TODO]"""
+        """
+        Insert the given item at the tail of this linked list.
+        """
+        # ! Runtime best & worst = O(1), given that tail is the end of ll. 
+        
         # Create a new node to hold the given item
         new_node = Node(item)
         # Check if this linked list is empty
@@ -174,8 +177,12 @@ class LinkedList(object):
         self.tail = new_node
 
     def prepend(self, item):
-        """Insert the given item at the head of this linked list.
-        Best and worst case running time: ??? under what conditions? [TODO]"""
+        """
+        Insert the given item at the head of this linked list.
+        """
+
+        # ! Runtime best & worst = O(1), given that head is the front of ll. 
+
         # Create a new node to hold the given item
         new_node = Node(item)
         # Check if this linked list is empty
@@ -214,8 +221,8 @@ class LinkedList(object):
         using the same node, or raise ValueError if old_item is not found.
         """
         
-        # ! Runtime best 
-        # ! Runtime worse
+        # ! Runtime best = O(1). 
+        # ! Runtime worst = O(n), n being size/length of ll. 
 
         
         node = self.head
@@ -231,8 +238,8 @@ class LinkedList(object):
         """
         Delete the given item from this linked list, or raise ValueError.
         """
-        # ! Runtime best
-        # ! Runtime worst
+        # ! Runtime best = O(1)
+        # ! Runtime worst = O(n), n being the size/length of ll. 
 
         # Start at the head node
         node = self.head
