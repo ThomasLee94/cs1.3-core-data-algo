@@ -235,36 +235,38 @@ class DoublyLinkedList(object):
         # check head and tail
         if self.head.data == item:
             self.head.next = None
+            self.head.next.previous = None
             self.size -= 1
-            return
         if self.tail.data == item:
             previous_node = self.tail.previous
             previous_node.next = None
             self.tail.previous = None
             self.size -= 1
-            return 
 
-        try:
-            # start at self.head.next
-            node = self.head.next
+        # start at self.head.next
+        node = self.head.next
 
-            # while ll length is greater than 1
-            while node.next is not None:
-                if node.next.data == item:
-                    next_node = node.next
-                    # set current node.next to skip next node
-                    node.next = next_node.next
-                    self.size -= 1
-                elif node.previous.data == item:
-                    previous_node = node.previous
-                    # set current node.previous to skip previous node
-                    node.previous = previous_node.previous
-                node = node.next.next 
+        # while ll length is greater than 1
+        while node.next is not None:
+            if node.next.data == item:
+                next_node = node.next
+                # set current node.next to skip next node
+                node.next = next_node.next
+                # set next_node.previous to skip current node
+                next_node.previous = None
+                # set next_node.next to skip node.next.next
+                next_node.next = None
+                # set next_node.next.previous to point to current node
+                next_node.next.previous = node 
+                # update size
+                self.size -= 1
+            elif node.previous.data == item:
+                previous_node = node.previous
+                # set current node.previous to skip previous node
+                node.previous = previous_node.previous
+            node = node.next.next 
 
-        # ll size = 1 
-        except node as error:
-            # item not in ll
-            raise error
+       
 
 
 def test_linked_list():
