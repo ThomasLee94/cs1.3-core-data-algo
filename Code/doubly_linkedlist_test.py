@@ -197,15 +197,24 @@ class DoublyLinkedListTest(unittest.TestCase):
         dll.delete('A')
         assert dll.head.data == 'B'  # new head
         assert dll.tail.data == 'C'  # unchanged
+        assert dll.head.previous == None
+        assert dll.tail.next == None
+        assert dll.head.next is dll.tail
+        assert dll.head is dll.tail.previous
         assert dll.size == 2
+
         dll.delete('C')
         assert dll.head.data == 'B'  # unchanged
         assert dll.tail.data == 'B'  # new tail
+        assert dll.head.next and dll.tail.next == None
+        assert dll.head.previous and dll.tail.previous == None
         assert dll.size == 1
+
         dll.delete('B')
         assert dll.head is None  # new head
         assert dll.tail is None  # new head
         assert dll.size == 0
+        
         with self.assertRaises(ValueError):
             dll.delete('X')  # item not in list
 
