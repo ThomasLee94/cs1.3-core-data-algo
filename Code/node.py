@@ -4,7 +4,7 @@ class Node(object):
         """Initialize this node with the given data."""
         self.data = data
         self.next = None
-        self.before = None
+        self.previous = None
 
     def __repr__(self):
         """Return a string representation of this node."""

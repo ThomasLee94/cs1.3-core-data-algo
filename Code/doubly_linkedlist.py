@@ -57,18 +57,17 @@ class DoublyLinkedList(object):
         """
         # ! Runtime best & worst = O(n), n being the size of index
 
-        try:
-          # start at head
-          node = self.head
+        if 0 <= index <= self.size:
+            raise ValueError(f'index {index} is out of range for Linked List!')
+    
+        # start at head
+        node = self.head
 
-          # iterate through pointers of ll by input index
-          for _ in range(index):
-              node = node.next
-          
-          return node.data
+        # iterate through pointers of ll by input index
+        for _ in range(index):
+            node = node.next
         
-        except node:
-          raise ValueError("List index out of range")
+        return node.data
     
     def node_at_index(self, index: int):
         """
@@ -78,18 +77,18 @@ class DoublyLinkedList(object):
 
         # ! Runtime best and worst = O(n), n being index.
 
-        try:
-          # start at head
-          node = self.head
+        if 0 <= index <= self.size:
+            raise ValueError(f'index {index} is out of range for Linked List!')
 
-          # iterate through pointers of ll by input index
-          for _ in range(index):
-              node = node.next
-          
-          return node
+        # start at head
+        node = self.head
+
+        # iterate through pointers of ll by input index
+        for _ in range(index):
+            node = node.next
         
-        except node:
-          raise ValueError("List index out of range")
+        return node
+        
 
     def node_by_item(self, item):
         """
@@ -97,16 +96,27 @@ class DoublyLinkedList(object):
         """ 
 
         # ! Runtime best and worst = O(n), n being the length/size of ll. 
+        # check head and tail
+        if self.head.data == item:
+            return self.head
+        if self.tail.data == item:
+            return self.tail
 
         try:
-            node = self.head
+            # start at self.head.next
+            node = self.head.next
 
-            for _ in range(self.size):
-                if node.data != item:
-                    node = node.next
-                else:
-                    return node
+            # while ll length is greater than 1
+            while node.next is not None:
+                if node.next.data == item:
+                    return node.next 
+                elif node.previous.data == item:
+                    return node.previous
+                node = node.next 
+            
+            return node
 
+        # ll size = 1 
         except node as error:
             # item not in ll
             raise error
@@ -130,16 +140,18 @@ class DoublyLinkedList(object):
           else:
               # init nodes
               index_node = self.node_at_index(index)
-              previous_node = self.node_at_index(index - 1)
+              previous_node = index_node.previous
+              next_node = index_node.next
               new_node = Node(item)
-              # insert new node to point at node_at_index
+              # update pointers
               new_node.next = index_node
-              # update pointer of previous_node
+              new_node.previous = previous_node
               previous_node.next = new_node
+              next_node.previous = new_node
               # update size
               self.size += 1
-				except:
-					raise ValueError('List index out of range: {}'.format(index))
+        except:
+            raise ValueError('List index out of range: {}'.format(index))
 
     def append(self, item):
         """
@@ -157,6 +169,7 @@ class DoublyLinkedList(object):
         else:
             # Otherwise insert new node after tail
             self.tail.next = new_node
+            new_node.previous = self.tail
             self.size += 1
         # Update tail to new node regardless
         self.tail = new_node
@@ -178,6 +191,7 @@ class DoublyLinkedList(object):
         else:
             # Otherwise insert new node before head
             new_node.next = self.head
+            self.head.previous = new_node
             self.size += 1
         # Update head to new node regardless
         self.head = new_node
@@ -187,18 +201,8 @@ class DoublyLinkedList(object):
         Best case running time: Omega(1) if item is near the head of the list.
         Worst case running time: O(n) if item is near the tail of the list or
         not present and we need to loop through all n nodes in the list."""
-        # Start at the head node
-        node = self.head  # Constant time to assign a variable reference
-        # Loop until the node is None, which is one node too far past the tail
-        while node is not None:  # Up to n iterations if we don't exit early
-            # Check if this node's data satisfies the given quality function
-            if quality(node.data):  # Constant time to call quality function
-                # We found data satisfying the quality function, so exit early
-                return node.data  # Constant time to return data
-            # Skip to the next node
-            node = node.next  # Constant time to reassign a variable
-        # We never found data satisfying quality, but have to return something
-        return None  # Constant time to return None
+        
+        pass
 
     def replace(self, old_item, new_item):
         """
@@ -209,7 +213,6 @@ class DoublyLinkedList(object):
         # ! Runtime best = O(1). 
         # ! Runtime worst = O(n), n being size/length of ll. 
 
-        
         node = self.head
         for _ in range(self.size):
             if node.data == old_item:
@@ -221,62 +224,51 @@ class DoublyLinkedList(object):
 
     def delete(self, item):
         """
-        Delete the given item from this linked list, or raise ValueError.
+        Delete the node containing the given item in this linked list, or raise ValueError.
         """
         # ! Runtime best = O(1)
         # ! Runtime worst = O(n), n being the size/length of ll. 
 
-        # Start at the head node
-        node = self.head
-        # Keep track of the node before the one containing the given item
-        previous = None
-        # Create a flag to track if we have found the given item
-        found = False
-        # Loop until we have found the given item or the node is None
-        while not found and node is not None:
-            # Check if the node's data matches the given item
-            if node.data == item:
-                # We found data matching the given item, so update found flag
-                found = True
-            else:
-                # Skip to the next node
-                previous = node
-                node = node.next
-        # Check if we found the given item or we never did and reached the tail
-        if found:
-            # Check if we found a node in the middle of this linked list
-            if node is not self.head and node is not self.tail:
-                # Update the previous node to skip around the found node
-                previous.next = node.next
-                # Unlink the found node from its next node
-                node.next = None
-                # decrement size
-                self.size -= 1
-            # Check if we found a node at the head
-            if node is self.head:
-                # Update head to the next node
-                self.head = node.next
-                # Unlink the found node from the next node
-                node.next = None
-                # decrement size
-                self.size -= 1
-            # Check if we found a node at the tail
-            if node is self.tail:
-                # Check if there is a node before the found node
-                if previous is not None:
-                    # Unlink the previous node from the found node
-                    previous.next = None
-                    # decrement size
+        if self.size <= 1:
+            raise ValueError(f'Linked List size is {self.size}!')
+        
+        # check head and tail
+        if self.head.data == item:
+            self.head.next = None
+            self.size -= 1
+            return
+        if self.tail.data == item:
+            previous_node = self.tail.previous
+            previous_node.next = None
+            self.tail.previous = None
+            self.size -= 1
+            return 
+
+        try:
+            # start at self.head.next
+            node = self.head.next
+
+            # while ll length is greater than 1
+            while node.next is not None:
+                if node.next.data == item:
+                    next_node = node.next
+                    # set current node.next to skip next node
+                    node.next = next_node.next
                     self.size -= 1
-                # Update tail to the previous node regardless
-                self.tail = previous
-        else:
-            # Otherwise raise an error to tell the user that delete has failed
-            raise ValueError('Item not found: {}'.format(item))
+                elif node.previous.data == item:
+                    previous_node = node.previous
+                    # set current node.previous to skip previous node
+                    node.previous = previous_node.previous
+                node = node.next.next 
+
+        # ll size = 1 
+        except node as error:
+            # item not in ll
+            raise error
 
 
 def test_linked_list():
-    ll = LinkedList()
+    ll = DoublyLinkedList()
     print(ll)
 
     print('Appending items:')
