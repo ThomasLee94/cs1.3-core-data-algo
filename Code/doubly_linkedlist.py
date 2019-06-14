@@ -247,7 +247,7 @@ class DoublyLinkedList(object):
         node = self.head.next
 
         # while ll length is greater than 1
-        while node.next is not None:
+        while node.next and node.next.next is not None:
             if node.next.data == item:
                 next_node = node.next
                 # set current node.next to skip next node
@@ -264,6 +264,14 @@ class DoublyLinkedList(object):
                 previous_node = node.previous
                 # set current node.previous to skip previous node
                 node.previous = previous_node.previous
+                # set previous_node.next to skip current node
+                previous_node.next = None
+                # set previous_node.previous to skip node current node needs to point to
+                previous_node.previous = None
+                # set the now previous node from currents' next to point to current node
+                node.previous.next = node
+                # increment count
+                self.size -= 1
             node = node.next.next 
 
        
