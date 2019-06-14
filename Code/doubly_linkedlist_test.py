@@ -1,6 +1,6 @@
 #!python
 from node import Node
-from linkedlist import LinkedList
+from doubly_linkedlist import DoublyLinkedList
 import unittest
 
 
@@ -15,185 +15,199 @@ class NodeTest(unittest.TestCase):
 
 
 class DoublyLinkedListTest(unittest.TestCase):
-
     def test_init(self):
-        ll = LinkedList()
-        assert ll.head is None
-        assert ll.tail is None
-        assert ll.size == 0
+        dll = DoublyLinkedList()
+        assert dll.head is None
+        assert dll.tail is None
+        assert dll.size == 0
 
     def test_init_with_list(self):
-        ll = LinkedList(['A', 'B', 'C'])
-        assert ll.head.data == 'A'  # first item
-        assert ll.tail.data == 'C'  # last item
-        assert ll.head.next.data == 'B'
-        assert ll.head.previous == None
-        assert ll.tail.previous.data == 'B'
-        assert ll.tail.next == None
-        assert ll.size == 3
+        dll = DoublyLinkedList(['A', 'B', 'C'])
+        assert dll.head.data == 'A'  # first item
+        assert dll.tail.data == 'C'  # last item
+        assert dll.head.next.data == 'B'
+        assert dll.head.previous == None
+        assert dll.tail.previous.data == 'B'
+        assert dll.tail.next == None
+        assert dll.size == 3
 
     def test_items(self):
-        ll = LinkedList()
-        assert ll.items() == []
-        ll.append('B')
-        assert ll.items() == ['B']
-        ll.prepend('A')
-        assert ll.items() == ['A', 'B']
-        ll.append('C')
-        assert ll.items() == ['A', 'B', 'C']
+        dll = DoublyLinkedList()
+        assert dll.items() == []
+        dll.append('B')
+        assert dll.items() == ['B']
+        dll.prepend('A')
+        assert dll.items() == ['A', 'B']
+        dll.append('C')
+        assert dll.items() == ['A', 'B', 'C']
 
     def test_length(self):
-        ll = LinkedList()
-        assert ll.length() == 0
+        dll = DoublyLinkedList()
+        assert dll.length() == 0
         # append and prepend operations increase length
-        ll.append('B')
-        assert ll.length() == 1
-        ll.prepend('A')
-        assert ll.length() == 2
-        ll.append('C')
-        assert ll.length() == 3
+        dll.append('B')
+        assert dll.length() == 1
+        dll.prepend('A')
+        assert dll.length() == 2
+        dll.append('C')
+        assert dll.length() == 3
         # delete operations decrease length
-        ll.delete('B')
-        assert ll.length() == 2
-        ll.delete('C')
-        assert ll.length() == 1
-        ll.delete('A')
-        assert ll.length() == 0
+        dll.delete('B')
+        assert dll.length() == 2
+        dll.delete('C')
+        assert dll.length() == 1
+        dll.delete('A')
+        assert dll.length() == 0
 
     def test_size(self):
-        ll = LinkedList()
-        assert ll.size == 0
+        dll = DoublyLinkedList()
+        assert dll.size == 0
         # append and prepend operations increment size
-        ll.append('B')
-        assert ll.size == 1
-        ll.prepend('A')
-        assert ll.size == 2
-        ll.append('C')
-        assert ll.size == 3
+        dll.append('B')
+        assert dll.size == 1
+        dll.prepend('A')
+        assert dll.size == 2
+        dll.append('C')
+        assert dll.size == 3
         # delete operations decrement size
-        ll.delete('B')
-        assert ll.size == 2
-        ll.delete('C')
-        assert ll.size == 1
-        ll.delete('A')
-        assert ll.size == 0
+        dll.delete('B')
+        assert dll.size == 2
+        dll.delete('C')
+        assert dll.size == 1
+        dll.delete('A')
+        assert dll.size == 0
 
     def test_get_at_index(self):
-        ll = LinkedList(['A', 'B', 'C'])
-        assert ll.get_at_index(0) == 'A'  # head item
-        assert ll.get_at_index(1) == 'B'  # middle item
-        assert ll.get_at_index(2) == 'C'  # tail item
+        dll = DoublyLinkedList(['A', 'B', 'C'])
+        assert dll.get_at_index(0) == 'A'  # head item
+        assert dll.get_at_index(1) == 'B'  # middle item
+        assert dll.get_at_index(2) == 'C'  # tail item
         with self.assertRaises(ValueError):
-            ll.get_at_index(3)  # index too high
+            dll.get_at_index(3)  # index too high
         with self.assertRaises(ValueError):
-            ll.get_at_index(-1)  # index too low
+            dll.get_at_index(-1)  # index too low
 
     def test_insert_at_index(self):
-        ll = LinkedList()
-        ll.insert_at_index(0, 'B')  # append('B')
-        assert ll.head.data == 'B'  # new head (at index 0)
-        assert ll.tail.data == 'B'  # new tail (at index 0)
-        assert ll.size == 1
-        ll.insert_at_index(0, 'A')  # prepend('A')
-        assert ll.head.data == 'A'  # new head (at index 0)
-        assert ll.tail.data == 'B'  # unchanged (now at index 1)
-        assert ll.size == 2
-        ll.insert_at_index(2, 'D')  # append('D')
-        assert ll.head.data == 'A'  # unchanged (at index 0)
-        assert ll.tail.data == 'D'  # new tail (now at index 2)
-        assert ll.size == 3
-        ll.insert_at_index(2, 'C')  # insert 'C' between 'B' and 'D'
-        assert ll.head.data == 'A'  # unchanged (at index 0)
-        assert ll.tail.data == 'D'  # unchanged (now at index 3)
-        assert ll.size == 4
+        dll = DoublyLinkedList()
+        dll.insert_at_index(0, 'B')  # append('B')
+        assert dll.head.data == 'B'  # new head (at index 0)
+        assert dll.tail.data == 'B'  # new tail (at index 0)
+        assert dll.size == 1
+        dll.insert_at_index(0, 'A')  # prepend('A')
+        assert dll.head.data == 'A'  # new head (at index 0)
+        assert dll.tail.data == 'B'  # unchanged (now at index 1)
+        assert dll.size == 2
+        dll.insert_at_index(2, 'D')  # append('D')
+        assert dll.head.data == 'A'  # unchanged (at index 0)
+        assert dll.tail.data == 'D'  # new tail (now at index 2)
+        assert dll.size == 3
+        dll.insert_at_index(2, 'C')  # insert 'C' between 'B' and 'D'
+        assert dll.head.data == 'A'  # unchanged (at index 0)
+        assert dll.tail.data == 'D'  # unchanged (now at index 3)
+        assert dll.size == 4
         with self.assertRaises(ValueError):
-            ll.insert_at_index(5, 'X')  # index too high
+            dll.insert_at_index(5, 'X')  # index too high
         with self.assertRaises(ValueError):
-            ll.insert_at_index(-1, 'Y')  # index too low
+            dll.insert_at_index(-1, 'Y')  # index too low
 
     def test_append(self):
-        ll = LinkedList()
-        ll.append('A')
-        assert ll.head.data == 'A'  # new head
-        assert ll.tail.data == 'A'  # new tail
-        assert ll.size == 1
+        dll = DoublyLinkedList()
 
-        ll.append('B')
-        assert ll.head.data == 'A'  # unchanged
-        assert ll.tail.data == 'B'  # new tail
+        dll.append('A')
+        assert dll.head.data == 'A'  # new head
+        assert dll.tail.data == 'A'  # new tail
+        assert dll.size == 1
+
+        dll.append('B')
+        assert dll.head.data == 'A'  # unchanged
+        assert dll.tail.data == 'B'  # new tail
         # checking to see if pointers have the same memory address
-        assert ll.head.next is ll.tail
-        assert ll.head is ll.tail.previous
-        assert ll.head.previous == None
-        assert ll.tail.next == None
-        assert ll.size == 2
-        
-        ll.append('C')
-        assert ll.head.data == 'A'  # unchanged
-        assert ll.tail.data == 'C'  # new tail
+        assert dll.head.next is dll.tail
+        assert dll.head is dll.tail.previous
+        assert dll.head.previous == None
+        assert dll.tail.next == None
+        assert dll.size == 2
 
-        assert ll.head.next.next is ll.tail  # two links right
-        assert ll.head.next is ll.tail.previous  # one link right, one link left
-        assert ll.head is ll.tail.previous.previous  # two links left
-        
-        assert ll.size == 3
+        dll.append('C')
+        assert dll.head.data == 'A'  # unchanged
+        assert dll.tail.data == 'C'  # new tail
+        assert dll.head.next.next is dll.tail  # two links right
+        assert dll.head.next is dll.tail.previous  # one link right, one link left
+        assert dll.head is dll.tail.previous.previous  # two links left
+        assert dll.head.previous == None
+        assert dll.tail.next == None
+        assert dll.size == 3
 
 
     def test_prepend(self):
-        ll = LinkedList()
-        ll.prepend('C')
-        assert ll.head.data == 'C'  # new head
-        assert ll.tail.data == 'C'  # new head
-        assert ll.size == 1
-        ll.prepend('B')
-        assert ll.head.data == 'B'  # new head
-        assert ll.tail.data == 'C'  # unchanged
-        assert ll.size == 2
-        ll.prepend('A')
-        assert ll.head.data == 'A'  # new head
-        assert ll.tail.data == 'C'  # unchanged
-        assert ll.size == 3
+        dll = DoublyLinkedList()
+        dll.prepend('C')
+        assert dll.head.data == 'C'  # new head
+        assert dll.tail.data == 'C'  # new head
+        assert dll.head.previous == None
+        assert dll.tail.next == None
+        assert dll.size == 1
+
+        dll.prepend('B')
+        assert dll.head.data == 'B'  # new head
+        assert dll.tail.data == 'C'  # unchanged
+        assert dll.head.previous == None
+        assert dll.tail.next == None
+        assert dll.head.next is dll.tail
+        assert dll.tail.previous is dll.head
+        assert dll.size == 2
+
+        dll.prepend('A')
+        assert dll.head.data == 'A'  # new head
+        assert dll.tail.data == 'C'  # unchanged
+        assert dll.size == 3
+        assert dll.head.previous == None
+        assert dll.tail.next == None
+        assert dll.head.next is dll.tail.previous
+        assert dll.head.next.next is dll.tail
+        assert dll.tail.previous.previous is dll.head
+        assert dll.size == 3
 
     def test_find(self):
-        ll = LinkedList(['A', 'B', 'C'])
-        assert ll.find(lambda item: item == 'B') == 'B'
-        assert ll.find(lambda item: item < 'B') == 'A'
-        assert ll.find(lambda item: item > 'B') == 'C'
-        assert ll.find(lambda item: item == 'X') is None
+        dll = DoublyLinkedList(['A', 'B', 'C'])
+        assert dll.find(lambda item: item == 'B') == 'B'
+        assert dll.find(lambda item: item < 'B') == 'A'
+        assert dll.find(lambda item: item > 'B') == 'C'
+        assert dll.find(lambda item: item == 'X') is None
 
     def test_replace(self):
-        ll = LinkedList(['A', 'B', 'C'])
-        ll.replace('A', 'D')
-        assert ll.head.data == 'D'  # new head
-        assert ll.tail.data == 'C'  # unchanged
-        assert ll.size == 3
-        ll.replace('B', 'E')
-        assert ll.head.data == 'D'  # unchanged
-        assert ll.tail.data == 'C'  # unchanged
-        assert ll.size == 3
-        ll.replace('C', 'F')
-        assert ll.head.data == 'D'  # unchanged
-        assert ll.tail.data == 'F'  # new tail
-        assert ll.size == 3
+        dll = DoublyLinkedList(['A', 'B', 'C'])
+        dll.replace('A', 'D')
+        assert dll.head.data == 'D'  # new head
+        assert dll.tail.data == 'C'  # unchanged
+        assert dll.size == 3
+        dll.replace('B', 'E')
+        assert dll.head.data == 'D'  # unchanged
+        assert dll.tail.data == 'C'  # unchanged
+        assert dll.size == 3
+        dll.replace('C', 'F')
+        assert dll.head.data == 'D'  # unchanged
+        assert dll.tail.data == 'F'  # new tail
+        assert dll.size == 3
         with self.assertRaises(ValueError):
-            ll.replace('X', 'Y')  # item not in list
+            dll.replace('X', 'Y')  # item not in list
 
     def test_delete(self):
-        ll = LinkedList(['A', 'B', 'C'])
-        ll.delete('A')
-        assert ll.head.data == 'B'  # new head
-        assert ll.tail.data == 'C'  # unchanged
-        assert ll.size == 2
-        ll.delete('C')
-        assert ll.head.data == 'B'  # unchanged
-        assert ll.tail.data == 'B'  # new tail
-        assert ll.size == 1
-        ll.delete('B')
-        assert ll.head is None  # new head
-        assert ll.tail is None  # new head
-        assert ll.size == 0
+        dll = DoublyLinkedList(['A', 'B', 'C'])
+        dll.delete('A')
+        assert dll.head.data == 'B'  # new head
+        assert dll.tail.data == 'C'  # unchanged
+        assert dll.size == 2
+        dll.delete('C')
+        assert dll.head.data == 'B'  # unchanged
+        assert dll.tail.data == 'B'  # new tail
+        assert dll.size == 1
+        dll.delete('B')
+        assert dll.head is None  # new head
+        assert dll.tail is None  # new head
+        assert dll.size == 0
         with self.assertRaises(ValueError):
-            ll.delete('X')  # item not in list
+            dll.delete('X')  # item not in list
 
 
 if __name__ == '__main__':
