@@ -20,7 +20,7 @@ class LinkedStack(object):
         """Return a string representation of this stack."""
         return 'Stack({} items, top={})'.format(self.length(), self.peek())
 
-    def is_empty(self):
+    def is_empty(self) -> bool:
         """Return True if this stack is empty, or False otherwise."""
         print(self.list.size)
 
@@ -28,7 +28,7 @@ class LinkedStack(object):
             return True
         return False
 
-    def length(self):
+    def length(self) -> int:
         """Return the number of items in this stack."""
         
         return self.list.size

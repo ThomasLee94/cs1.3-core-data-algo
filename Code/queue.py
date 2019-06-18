@@ -21,7 +21,10 @@ class LinkedQueue(object):
 
     def is_empty(self):
         """Return True if this queue is empty, or False otherwise."""
-        # TODO: Check if empty
+        
+        if self.list.size < 1:
+            return True
+        return False
 
     def length(self):
         """Return the number of items in this queue."""
