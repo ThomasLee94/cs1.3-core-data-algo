@@ -19,32 +19,46 @@ class LinkedQueue(object):
         """Return a string representation of this queue."""
         return 'Queue({} items, front={})'.format(self.length(), self.front())
 
-    def is_empty(self):
+    def is_empty(self) -> bool:
         """Return True if this queue is empty, or False otherwise."""
         
         if self.list.size < 1:
             return True
         return False
 
-    def length(self):
+    def length(self) -> int:
         """Return the number of items in this queue."""
-        # TODO: Count number of items
+        
+        return self.list.size
 
     def enqueue(self, item):
-        """Insert the given item at the back of this queue.
-        Running time: O(???) – Why? [TODO]"""
-        # TODO: Insert given item
+        """Insert the given item at the back of this queue."""
 
-    def front(self):
+        # ! Runtime = O(1)
+        
+        return self.list.append(item)
+
+    def front(self) -> (str, int, None):
         """Return the item at the front of this queue without removing it,
         or None if this queue is empty."""
-        # TODO: Return front item, if any
+        
+        if self.is_empty():
+            return None
+        return self.list.head.data
 
-    def dequeue(self):
+    def dequeue(self) -> (ValueError, str, int):
         """Remove and return the item at the front of this queue,
-        or raise ValueError if this queue is empty.
-        Running time: O(???) – Why? [TODO]"""
-        # TODO: Remove and return front item, if any
+        or raise ValueError if this queue is empty"""
+
+        # ! Runtime = O(1)
+
+        if self.list.size < 1:
+            raise ValueError("Stack is empty")
+
+        output_item = self.list.head.data
+        self.list.delete(output_item)
+        return output_item
+
 
 
 # Implement ArrayQueue below, then change the assignment at the bottom
