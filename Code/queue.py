@@ -41,7 +41,7 @@ class LinkedQueue(object):
     def front(self) -> (str, int, None):
         """Return the item at the front of this queue without removing it,
         or None if this queue is empty."""
-        
+
         if self.is_empty():
             return None
         return self.list.head.data
@@ -77,32 +77,46 @@ class ArrayQueue(object):
         """Return a string representation of this queue."""
         return 'Queue({} items, front={})'.format(self.length(), self.front())
 
-    def is_empty(self):
+    def is_empty(self) -> bool:
         """Return True if this queue is empty, or False otherwise."""
-        # TODO: Check if empty
+        
+        if len(self.list) < 1:
+            return True
+        return False 
 
-    def length(self):
+    def length(self) -> int:
         """Return the number of items in this queue."""
-        # TODO: Count number of items
+        return len(self.list)
 
     def enqueue(self, item):
-        """Insert the given item at the back of this queue.
-        Running time: O(???) – Why? [TODO]"""
-        # TODO: Insert given item
+        """Insert the given item at the back of this queue."""
+
+        # ! Runtime = O(n)
+        
+        self.list.insert(0, item)
 
     def front(self):
         """Return the item at the front of this queue without removing it,
         or None if this queue is empty."""
-        # TODO: Return front item, if any
+        
+        if len(self.list) < 1:
+            return None
+        return self.list[len(self.list) - 1]
 
     def dequeue(self):
         """Remove and return the item at the front of this queue,
-        or raise ValueError if this queue is empty.
-        Running time: O(???) – Why? [TODO]"""
-        # TODO: Remove and return front item, if any
+        or raise ValueError if this queue is empty."""
+
+        # ! Runtime = 
+        
+        if len(self.list) < 1:
+            raise ValueError("Queue is empty")
+        output_item = self.list[len(self.list) - 1]
+        del self.list[len(self.list) - 1]
+        return output_item
 
 
 # Implement LinkedQueue and ArrayQueue above, then change the assignment below
 # to use each of your Queue implementations to verify they each pass all tests
-Queue = LinkedQueue
-# Queue = ArrayQueue
+# Queue = LinkedQueue
+Queue = ArrayQueue
