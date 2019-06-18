@@ -11,6 +11,7 @@ class LinkedStack(object):
         """Initialize this stack and push the given items, if any."""
         # Initialize a new linked list to store the items
         self.list = LinkedList()
+
         if iterable is not None:
             for item in iterable:
                 self.push(item)
@@ -21,27 +22,44 @@ class LinkedStack(object):
 
     def is_empty(self):
         """Return True if this stack is empty, or False otherwise."""
-        # TODO: Check if empty
+        print(self.list.size)
+
+        if self.list.size < 1:
+            return True
+        return False
 
     def length(self):
         """Return the number of items in this stack."""
-        # TODO: Count number of items
+        
+        return self.list.size
 
     def push(self, item):
-        """Insert the given item on the top of this stack.
-        Running time: O(???) – Why? [TODO]"""
-        # TODO: Push given item
+        """Insert the given item on the top of this stack."""
+
+        # ! Runtime = O(1)
+        
+        return self.list.prepend(item)
 
     def peek(self):
         """Return the item on the top of this stack without removing it,
         or None if this stack is empty."""
-        # TODO: Return top item, if any
+        
+        if self.is_empty():
+            return None
+        return self.list.head.data
 
     def pop(self):
         """Remove and return the item on the top of this stack,
-        or raise ValueError if this stack is empty.
-        Running time: O(???) – Why? [TODO]"""
-        # TODO: Remove and return top item, if any
+        or raise ValueError if this stack is empty."""
+
+        # ! Runtime = O(1)
+        
+        if self.list.size == 0:
+            raise ValueError("Stack is empty")
+
+        output_data = self.list.head.data
+        self.list.delete(output_data)
+        return output_data
 
 
 # Implement ArrayStack below, then change the assignment at the bottom
