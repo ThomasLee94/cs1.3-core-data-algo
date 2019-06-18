@@ -107,7 +107,7 @@ class ArrayQueue(object):
         """Remove and return the item at the front of this queue,
         or raise ValueError if this queue is empty."""
 
-        # ! Runtime = 
+        # ! Runtime = O(n)
         
         if len(self.list) < 1:
             raise ValueError("Queue is empty")
