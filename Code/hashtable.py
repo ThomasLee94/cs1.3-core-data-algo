@@ -63,8 +63,9 @@ class HashTable(object):
 
         # Collect all pairs of key-value entries in each of the buckets
         all_items = []
-        for bucket in self.buckets:
-            all_items.extend(bucket.items())
+        for bucket in self.buckets:  # bucket is a LinkedList object
+            items = bucket.items()  # items is a list of all data in the bucket, each is a tuple containing a key-value pair
+            all_items.extend(items)
         return all_items
 
     def length(self):
@@ -72,17 +73,17 @@ class HashTable(object):
 
         # ! Runtime = O(n), n being the number of buckets
 
-        # Count number of key-value entries in each of the buckets
-        item_count = 0
-        for bucket in self.buckets:
-            # .length() is ll class method
-            item_count += bucket.size
-        return item_count
+        # Count number of key-value entries in each of the buckets using linked-list class functions
+        # item_count = 0
+        # for bucket in self.buckets:
+        #     # .length() is ll class method
+        #     item_count += bucket.size
+        # return item_count
 
         # Equivalent to this list comprehension:
         # return sum(bucket.size for bucket in self.buckets)
 
-        # return self.size
+        return self.size
 
     def contains(self, key):
         """Return True if this hash table contains the given key, or False."""

@@ -224,51 +224,70 @@ class DoublyLinkedList(object):
 
     def delete(self, item):
         """
-        Delete the node containing the given item in this linked list, or raise ValueError.
+        Delete the node containing the first occurrence of the given item in this linked list,
+        or raise ValueError if given item is not found.
         """
         # ! Runtime best = O(1)
         # ! Runtime worst = O(n), n being the size/length of ll. 
 
+        # case: empty dll
         if self.size < 1:
             raise ValueError(f'Linked List size is {self.size}!')
         
+        # case: dll only has one node
         if self.size == 1:
             if self.head.data == item:
                 self.head = None
                 self.tail = None
                 self.size -= 1
+                return  # exit early because deletion is done
             else:
                 raise ValueError(f'{item} is not in doubly linked list!')
         
-        # check head and tail
+        # remaining cases: dll has >= 2 nodes
+        # case: item is in head
         if self.head.data == item:
+            print("ITEM IN HEAD")
             node = self.head
             next_node = node.next
+            # self.head = next_node
+            # unlink both nodes
             next_node.previous = None
             node.next = None
             self.size -= 1
+            return  # exit early because deletion is done
+        # case: item is in tail
         if self.tail.data == item:
+            print("ITEM IN TAIL")
             node = self.tail
             previous_node = node.previous
+            # unlink both nodes
             previous_node.next = None
             node.previous = None
+            # self.tail = previous_node
             self.size -= 1
+            return  # exit early because deletion is done
 
-        # start at self.head.next
+        # remaining cases: dll has >= 2 nodes and item is not in head or tail
+        # start at node after head
         node = self.head.next
 
-        print(node)
-
+        # iterate through dll whos size is >= 2
         while node is not None:
             if node.data == item:
+                print("ITEM IN BETWEEN HEAD AND TAIL - WHILE LOOP")
                 previous_node = node.previous
                 next_node = node.next
+                # update links to point around this node
                 previous_node.next = next_node
                 next_node.previous = previous_node
                 self.size -= 1
+                return  # exit early because deletion is done
+            # advance one node down the chain
             node = node.next
         
-        raise ValueError(f"{item} is not in doubly linked list!")
+        raise ValueError(f"{item} not found in doubly linked list!")
+
 
 def test_linked_list():
     ll = DoublyLinkedList()
