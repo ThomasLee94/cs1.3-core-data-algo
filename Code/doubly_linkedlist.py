@@ -68,58 +68,6 @@ class DoublyLinkedList(object):
             node = node.next
         
         return node.data
-    
-    def node_at_index(self, index: int):
-        """
-        Returns node at given index of linked list, or raises 
-        ValueError if the given index is out of range of the list size.
-        """ 
-
-        # ! Runtime best and worst = O(n), n being index.
-
-        if 0 <= index <= self.size:
-            raise ValueError(f'index {index} is out of range for Linked List!')
-
-        # start at head
-        node = self.head
-
-        # iterate through pointers of ll by input index
-        for _ in range(index):
-            node = node.next
-        
-        return node
-        
-
-    def node_by_item(self, item):
-        """
-        Returns node that contains item
-        """ 
-
-        # ! Runtime best and worst = O(n), n being the length/size of ll. 
-        # check head and tail
-        if self.head.data == item:
-            return self.head
-        if self.tail.data == item:
-            return self.tail
-
-        try:
-            # start at self.head.next
-            node = self.head.next
-
-            # while ll length is greater than 1
-            while node.next is not None:
-                if node.next.data == item:
-                    return node.next 
-                elif node.previous.data == item:
-                    return node.previous
-                node = node.next 
-            
-            return node
-
-        # ll size = 1 
-        except node as error:
-            # item not in ll
-            raise error
 
     def insert_at_index(self, index, item):
         """
