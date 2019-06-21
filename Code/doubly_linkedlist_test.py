@@ -206,8 +206,10 @@ class DoublyLinkedListTest(unittest.TestCase):
         dll.delete('C')
         assert dll.head.data == 'B'  # unchanged
         assert dll.tail.data == 'B'  # new tail
-        assert dll.head.next and dll.tail.next == None
-        assert dll.head.previous and dll.tail.previous == None
+        assert dll.head.next == None
+        assert dll.tail.next == None
+        assert dll.head.previous == None
+        assert dll.tail.previous == None
         assert dll.size == 1
 
         dll.delete('B')

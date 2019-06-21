@@ -201,8 +201,18 @@ class DoublyLinkedList(object):
         Best case running time: Omega(1) if item is near the head of the list.
         Worst case running time: O(n) if item is near the tail of the list or
         not present and we need to loop through all n nodes in the list."""
-        
-        pass
+        # Start at the head node
+        node = self.head  # Constant time to assign a variable reference
+        # Loop until the node is None, which is one node too far past the tail
+        while node is not None:  # Up to n iterations if we don't exit early
+            # Check if this node's data satisfies the given quality function
+            if quality(node.data):  # Constant time to call quality function
+                # We found data satisfying the quality function, so exit early
+                return node.data  # Constant time to return data
+            # Skip to the next node
+            node = node.next  # Constant time to reassign a variable
+        # We never found data satisfying quality, but have to return something
+        return None  # Constant time to return None
 
     def replace(self, old_item, new_item):
         """
@@ -247,10 +257,9 @@ class DoublyLinkedList(object):
         # remaining cases: dll has >= 2 nodes
         # case: item is in head
         if self.head.data == item:
-            print("ITEM IN HEAD")
             node = self.head
             next_node = node.next
-            # self.head = next_node
+            self.head = next_node
             # unlink both nodes
             next_node.previous = None
             node.next = None
@@ -258,13 +267,12 @@ class DoublyLinkedList(object):
             return  # exit early because deletion is done
         # case: item is in tail
         if self.tail.data == item:
-            print("ITEM IN TAIL")
             node = self.tail
             previous_node = node.previous
             # unlink both nodes
             previous_node.next = None
             node.previous = None
-            # self.tail = previous_node
+            self.tail = previous_node
             self.size -= 1
             return  # exit early because deletion is done
 
@@ -275,7 +283,6 @@ class DoublyLinkedList(object):
         # iterate through dll whos size is >= 2
         while node is not None:
             if node.data == item:
-                print("ITEM IN BETWEEN HEAD AND TAIL - WHILE LOOP")
                 previous_node = node.previous
                 next_node = node.next
                 # update links to point around this node
@@ -287,7 +294,6 @@ class DoublyLinkedList(object):
             node = node.next
         
         raise ValueError(f"{item} not found in doubly linked list!")
-
 
 def test_linked_list():
     ll = DoublyLinkedList()

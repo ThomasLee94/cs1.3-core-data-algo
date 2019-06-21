@@ -81,7 +81,7 @@ class HashTable(object):
     def contains(self, key):
         """Return True if this hash table contains the given key, or False."""
 
-        # ! Runtime = 
+        # ! Runtime = O(n), n being the number of entries
 
         # Find the bucket the given key belongs in
         index = self._bucket_index(key)
@@ -165,7 +165,6 @@ class HashTable(object):
             new_size = len(self.buckets) / 2  # Half size
 
         # save tuples from buckets to be deleted
-        # temp_list = [self.buckets[i] for i in range(self.size)]
         temp_list = self.items()
 
         # update buckets to double the size with empty ll's
@@ -173,8 +172,6 @@ class HashTable(object):
 
         # rehash old tuples (key-value pairs) in newly sized buckets initialised
         # with empty linked lists
-        # for key_value_pairs in temp_list:
-        #     self.set(key_value_pairs[0], key_value_pairs[1])
         for key, value in temp_list:
             self.set(key, value)
 
