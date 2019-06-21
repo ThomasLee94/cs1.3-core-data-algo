@@ -229,53 +229,46 @@ class DoublyLinkedList(object):
         # ! Runtime best = O(1)
         # ! Runtime worst = O(n), n being the size/length of ll. 
 
-        if self.size <= 1:
+        if self.size < 1:
             raise ValueError(f'Linked List size is {self.size}!')
+        
+        if self.size == 1:
+            if self.head.data == item:
+                self.head = None
+                self.tail = None
+                self.size -= 1
+            else:
+                raise ValueError(f'{item} is not in doubly linked list!')
         
         # check head and tail
         if self.head.data == item:
-            self.head.next = None
-            self.head.next.previous = None
+            node = self.head
+            next_node = node.next
+            next_node.previous = None
+            node.next = None
             self.size -= 1
         if self.tail.data == item:
-            previous_node = self.tail.previous
+            node = self.tail
+            previous_node = node.previous
             previous_node.next = None
-            self.tail.previous = None
+            node.previous = None
             self.size -= 1
 
         # start at self.head.next
         node = self.head.next
 
-        # while ll length is greater than 1
-        while node.next and node.next.next is not None:
-            if node.next.data == item:
-                next_node = node.next
-                # set current node.next to skip next node
-                node.next = next_node.next
-                # set next_node.previous to skip current node
-                next_node.previous = None
-                # set next_node.next to skip node.next.next
-                next_node.next = None
-                # set next_node.next.previous to point to current node
-                next_node.next.previous = node 
-                # update size
-                self.size -= 1
-            elif node.previous.data == item:
+        print(node)
+
+        while node is not None:
+            if node.data == item:
                 previous_node = node.previous
-                # set current node.previous to skip previous node
-                node.previous = previous_node.previous
-                # set previous_node.next to skip current node
-                previous_node.next = None
-                # set previous_node.previous to skip node current node needs to point to
-                previous_node.previous = None
-                # set the now previous node from currents' next to point to current node
-                node.previous.next = node
-                # increment count
+                next_node = node.next
+                previous_node.next = next_node
+                next_node.previous = previous_node
                 self.size -= 1
-            node = node.next.next 
-
-       
-
+            node = node.next
+        
+        raise ValueError(f"{item} is not in doubly linked list!")
 
 def test_linked_list():
     ll = DoublyLinkedList()
