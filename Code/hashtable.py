@@ -26,14 +26,16 @@ class HashTable(object):
     def load_factor(self):
         """Return the load factor, the ratio of number of entries to buckets."""
         
-        # ! Runtime =
+        # ! Runtime = O(n), n being the number of (key ,value) in self.buckets
 
-        return (len(self.items()) / len(self.buckets))
+        items = self.items()
+
+        return (len(items) / len(self.buckets))
 
     def keys(self):
         """Return a list of all keys in this hash table."""
 
-        # ! Runtime = O(n), n being the number of entries in hashtable 
+        # ! Runtime = O(n), n being the number (key, value) in self.buckets
 
         # Collect all keys in each of the buckets
         all_keys = []
@@ -45,7 +47,7 @@ class HashTable(object):
     def values(self):
         """Return a list of all values in this hash table."""
 
-        # ! Runtime = O(n), n being the length of the buckets
+        # ! Runtime = O(n), n being the number (key, value) in self.buckets
 
         # Collect all values in each of the buckets
         all_values = []
@@ -57,7 +59,7 @@ class HashTable(object):
     def items(self):
         """Return a list of all entries (key-value pairs) in this hash table."""
 
-        # ! Runtime = 
+        # ! Runtime = O(n), n being the number (key, value) in self.buckets
 
         # Collect all pairs of key-value entries in each of the buckets
         all_items = []
@@ -68,7 +70,7 @@ class HashTable(object):
     def length(self):
         """Return the number of key-value entries by traversing its buckets."""
 
-        # ! Runtime = 
+        # ! Runtime = O(n), n being the number of buckets
 
         # Count number of key-value entries in each of the buckets
         item_count = 0
@@ -78,7 +80,7 @@ class HashTable(object):
         return item_count
 
         # Equivalent to this list comprehension:
-        # return sum(bucket.length() for bucket in self.buckets)
+        # return sum(bucket.size for bucket in self.buckets)
 
         # return self.size
 
@@ -131,9 +133,9 @@ class HashTable(object):
         # Insert the new key-value entry into the bucket in either case
         bucket.append((key, value))
         self.size += 1
-        # TODO: Check if the load factor exceeds a threshold such as 0.75
+        # Check if the load factor exceeds a threshold such as 0.75
         if self.load_factor() > 0.75:
-        # TODO: If so, automatically resize to reduce the load factor
+        # If so, automatically resize to reduce the load factor
             self._resize()
 
     def delete(self, key):
