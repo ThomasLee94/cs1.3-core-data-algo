@@ -123,7 +123,7 @@ class LinkedList(object):
             self.prepend(item)
 
         # case: insert new node as tail
-        elif index == self.size:
+        if index == self.size:
             self.append(item)
         else:
             # init nodes

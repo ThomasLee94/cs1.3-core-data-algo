@@ -68,6 +68,26 @@ class DoublyLinkedList(object):
             node = node.next
         
         return node.data
+    def node_at_index(self, index: int):
+        """
+        Returns node at given index of linked list, or raises 
+        ValueError if the given index is out of range of the list size.
+        """ 
+
+        # ! Runtime best and worst = O(n), n being index.
+
+        # Check if the given index is out of range and if so raise an error
+        if not (0 <= index < self.size):
+            raise ValueError('List index out of range: {}'.format(index))
+        
+        # init node
+        node = self.head
+
+        # loop through ll
+        for _ in range(index):
+            node = node.next
+        
+        return node
 
     def insert_at_index(self, index, item):
         """
@@ -77,30 +97,31 @@ class DoublyLinkedList(object):
 
         # ! Runtime best = O(1)
         # ! Runtime worst = O(2n), node_at_index() called. Tends to O(n) -> scales linearly.   
-        try:
-          # case: insert new node as head
-          if index == 0:
-              self.prepend(item)
 
-          # case: insert new node as tail
-          elif index == self.size:
-              self.append(item)
-          else:
-              # init nodes
-              index_node = self.node_at_index(index)
-              previous_node = index_node.previous
-              next_node = index_node.next
-              new_node = Node(item)
-              # update pointers
-              new_node.next = index_node
-              new_node.previous = previous_node
-              previous_node.next = new_node
-              next_node.previous = new_node
-              # update size
-              self.size += 1
-        except:
-            raise ValueError('List index out of range: {}'.format(index))
+        if not (0 <= index <= self.size):
+            raise ValueError(f'index {index} is out of range for Linked List!')
 
+        # case: insert new node as head with a dll size > 1
+        if index == 0:
+            self.prepend(item)
+
+        # case: insert new node as tail
+        elif index == self.size:
+            self.append(item)
+        
+        else:
+            # init nodes
+            index_node = self.node_at_index(index)
+            previous_node = index_node.previous
+            new_node = Node(item)
+            # update pointers
+            new_node.next = index_node
+            new_node.previous = previous_node
+            index_node.previous = new_node
+            previous_node.next = new_node
+            # update size
+            self.size += 1
+        
     def append(self, item):
         """
         Insert the given item at the tail of this linked list.
@@ -134,7 +155,7 @@ class DoublyLinkedList(object):
         # Check if this linked list is empty
         if self.is_empty():
             # Assign tail to new node
-            self.tail = new_node
+            self.head = self.tail = new_node
             self.size += 1
         else:
             # Otherwise insert new node before head
