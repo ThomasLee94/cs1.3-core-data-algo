@@ -74,13 +74,6 @@ class HashTable(object):
         # ! Runtime = O(n), n being the number of buckets
 
         # Count number of key-value entries in each of the buckets using linked-list class functions
-        # item_count = 0
-        # for bucket in self.buckets:
-        #     # .length() is ll class method
-        #     item_count += bucket.size
-        # return item_count
-
-        # Equivalent to this list comprehension:
         # return sum(bucket.size for bucket in self.buckets)
 
         return self.size
