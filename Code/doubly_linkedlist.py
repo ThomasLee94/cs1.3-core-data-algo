@@ -57,7 +57,7 @@ class DoublyLinkedList(object):
         """
         # ! Runtime best & worst = O(n), n being the size of index
 
-        if 0 <= index <= self.size:
+        if not (0 <= index < self.size):
             raise ValueError(f'index {index} is out of range for Linked List!')
     
         # start at head
