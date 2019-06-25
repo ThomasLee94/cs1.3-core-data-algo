@@ -165,16 +165,19 @@ class HashTable(object):
             new_size = len(self.buckets) / 2  # Half size
 
         # save tuples from buckets to be deleted
+        # ! Runtime = O(b)
         temp_list = self.items()
 
         # update buckets to double the size with empty ll's
+        # ! Runtime = O(n), n being the new_size
         self.__init__(new_size)
 
         # rehash old tuples (key-value pairs) in newly sized buckets initialised
         # with empty linked lists
+        # ! Runtime = O(b)
         for key, value in temp_list:
+            # ! Runtime = 
             self.set(key, value)
-
 
 def test_hash_table():
     ht = HashTable(4)
